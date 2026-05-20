@@ -1,4 +1,6 @@
-﻿namespace Dsw2026Ej11.Collections;
+﻿using Dsw2026Ej11.Domain;
+
+namespace Dsw2026Ej11.Collections;
 
 /*
  * Para cada punto crear un método que permita:
@@ -16,4 +18,73 @@
  */
 public class CasoLinq
 {
+    private List<Libro> libros;
+
+    public CasoLinq()
+    {
+        libros = Libro.CrearLista();
+    }
+
+    // 1. Primer libro
+    public Libro GetPrimero()
+    {
+        return libros.FirstOrDefault();
+    }
+
+    // 2. Último libro
+    public Libro GetUltimo()
+    {
+        return libros.LastOrDefault();
+    }
+
+    // 3. Suma de precios
+    public decimal GetTotalPrecios()
+    {
+        return libros.Sum(l => l.Precio);
+    }
+
+    // 4. Promedio de precios
+    public decimal GetPromedioPrecios()
+    {
+        return libros.Average(l => l.Precio);
+    }
+
+    // 5. Libros con Id > 15
+    public List<Libro> GetListById()
+    {
+        return libros.Where(l => l.Id > 15).ToList();
+    }
+
+    // 6. Lista formateada
+    public List<string> GetLibros()
+    {
+        return libros
+            .Select(l => $"{l.Titulo} - {l.Precio:C}")
+            .ToList();
+    }
+
+    // 7. Mayor precio
+    public Libro GetMayorPrecio()
+    {
+        return libros.OrderByDescending(l => l.Precio).FirstOrDefault();
+    }
+
+    // 8. Menor precio
+    public Libro GetMenorPrecio()
+    {
+        return libros.OrderBy(l => l.Precio).FirstOrDefault();
+    }
+
+    // 9. Mayores al promedio
+    public List<Libro> GetMayorPromedio()
+    {
+        var promedio = libros.Average(l => l.Precio);
+        return libros.Where(l => l.Precio > promedio).ToList();
+    }
+
+    // 10. Ordenados por título descendente
+    public List<Libro> GetOrdenadosDesc()
+    {
+        return libros.OrderByDescending(l => l.Titulo).ToList();
+    }
 }
